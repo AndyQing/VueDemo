@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="example-1">
+        <!-- 将'单纯'改成'邪恶'显示出来 -->
+        <p>{{ message|msgFormat }}</p>
+        <p>{{ message|msgFormat2('疯狂') }}</p>
+        <!-- 将时间格式化 -->
+        <p>{{date|dateFormat}}</p>
+    </div>
+    <script>
+        // 定义一个vue全局过滤器msgFormat
+        Vue.filter('msgFormat', function (msg) {
+            // return msg.replace('单纯', '邪恶');//只替换第一个
+            return msg.replace(/单纯/g, '邪恶');
+        })
+
+        Vue.filter('msgFormat2', function (msg, arg) {
+            return msg.replace(/单纯/g, arg);
+        })
+
+        Vue.filter('dateFormat', function (dateStr) {
+            var dt = new Date(dateStr);
+            var y = dt.getFullYear();
+            var m = dt.getMonth() + 1;
+            var d = dt.getDate();
+            // return y + '-' + m + '-' + d;
+            return `${y}-${m}-${d}`;
+        })
+        var example1 = new Vue({
+            el: '#example-1',
+            data: {
+                message: '曾经，我也是一个单纯的少年，单纯的我，傻傻的问，谁是世界上最单纯的人',
+                date: new Date()
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

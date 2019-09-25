@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+
+<body>
+    <ul id="app">
+        <li v-for="value in items">
+            {{ value }}
+        </li>
+    </ul>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                items: ['a', 'b', 'c']
+            }
+        })
+        vm.items.push('d');
+        // vm.items[0] = 'x' // 不是响应性的，此时看数组中的第一个数据没有变化
+
+        // 方法1：Vue.set
+        Vue.set(vm.items, 0, 'x')
+        //方法2：
+        vm.$set(vm.items, 0, 'x')
+        //方法3：使用数组自带的splice方法
+        vm.items.splice(0, 1, 'x')
+
+        // vm.items.splice(2);
+
+    </script>
+</body>
+
+</html>

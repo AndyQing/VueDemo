@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1 id="h1">{{message}}</h1>
+        <input type="button" @click="change" value="更新数据" />
+        <input type="button" @click="destroy" value="销毁" />
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                message: 'Welcome Vue',
+            },
+            methods: {
+                show() {
+                    console.log('执行了show方法')
+                },
+                change() {
+                    this.message = '我被改变了';
+                },
+                destroy() {
+                    vm.$destroy();
+                }
+            },
+            beforeCreate() {
+                //在此生命周期执行时，data和methods中的数据都还未初始化
+                console.group('beforeCreate 创建前状态===============》');
+                console.log("%c%s", "color:red", "el     : " + this.$el); //undefined
+                console.log("%c%s", "color:red", "message: " + this.message);//undefined
+                this.show();//this.show is not a function
+            },
+            created: function () {
+                //如果想调用data和methods中的数据，至少要在此生命周期执行
+                console.group('created 创建完毕状态===============》');
+                console.log("%c%s", "color:red", "el     : " + this.$el); //undefined
+                console.log("%c%s", "color:green", "message: " + this.message); //Welcome Vue  =>  已被初始化
+                this.show();//执行了
+            },
+            beforeMount: function () {
+                //此时页面中的元素还没真正替换过来
+                console.group('beforeMount 挂载前状态===============》');
+                console.log("%c%s", "color:green", "el     : " + (this.$el)); //已被初始化
+                console.log(this.$el); // 当前挂在的元素
+                console.log("%c%s", "color:red", document.getElementById('h1').innerText); //{{message}}
+            },
+            mounted: function () {
+                console.group('mounted 挂载结束状态===============》');
+                console.log("%c%s", "color:green", document.getElementById('h1').innerText); //Welcome Vue
+            },
+            beforeUpdate: function () {
+                //此阶段页面中显示的是旧数据，data中的是最新数据，页面尚未和最新数据同步
+                console.group('beforeUpdate 更新前状态===============》'); //这里指的是页面渲染新数据之前
+                console.log("%c%s", "color:green", "界面上元素内容: " + document.getElementById('h1').innerText); //Welcome Vue
+                console.log("%c%s", "color:green", "message: " + this.message);//我被改变了
+            },
+            updated: function () {
+                //此时页面和data中的数据保持一致，都是最新的
+                console.group('updated 更新完成状态===============》');
+                console.log("%c%s", "color:green", "界面上元素内容: " + document.getElementById('h1').innerText); //我被改变了
+                console.log("%c%s", "color:green", "message: " + this.message);//我被改变了
+            },
+            beforeDestroy: function () {
+                //此时data和methods中的数据都处于可用状态
+                console.group('beforeDestroy 销毁前状态===============》');
+            },
+            destroyed: function () {
+                console.group('destroyed 销毁完成状态===============》');
+            }
+        })
+    </script>
+</body>
+
+</html>

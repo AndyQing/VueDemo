@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 将时间格式化 -->
+        <p>{{date|dateFormat}}</p>
+    </div>
+    <div id="app2">
+        <!-- 将时间格式化 -->
+        <p>{{date|dateFormat}}</p>
+    </div>
+    <script>
+        // 定义一个vue全局过滤器msgFormat
+        Vue.filter('dateFormat', function (dateStr) {
+            var dt = new Date(dateStr);
+            var y = dt.getFullYear();
+            var m = (dt.getMonth() + 1).toString().padStart(2, '0');
+            var d = dt.getDate().toString().padStart(2, '0');
+            var hh = dt.getHours().toString().padStart(2, '0');
+            var mm = dt.getMinutes().toString().padStart(2, '0');
+            var ss = dt.getSeconds().toString().padStart(2, '0');
+            // return y + '-' + m + '-' + d;
+            return `${y}-${m}-${d} ${hh}:${mm}:${ss}`;
+        })
+        var app = new Vue({
+            el: '#app',
+            data: {
+                date: new Date()
+            },
+            methods: {
+
+            },
+            filters: {//定义私有过滤器,app2中的元素获取不到
+                //私有过滤器和全局过滤器名称一致的话，优先调用私有过滤器
+                dateFormat: function (dateStr) {
+                    var dt = new Date(dateStr);
+                    var y = dt.getFullYear();
+                    var m = (dt.getMonth() + 1).toString().padStart(2, '0');
+                    var d = dt.getDate().toString().padStart(2, '0');
+                    // return y + '-' + m + '-' + d;
+                    return `${y}-${m}-${d}~~~`;
+                }
+            }
+        })
+        var app2 = new Vue({
+            el: '#app2',
+            data: {
+                date: new Date()
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/vue.min.js"></script>
+    <!-- vue-resource包依赖vue.js -->
+    <script src="js/vue-resource.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button @click='getInfo'>点击进行get请求接口</button>
+        <button @click='postInfo'>点击进行post请求接口</button>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            methods: {
+                getInfo() {
+                    var url = 'http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20';
+                    this.$http.get(url).then(response => {
+                        console.log("response===", response.body);
+                    }, response => {
+                        // error callback
+                    });
+                },
+                postInfo() {
+                    // 手动发起的post请求，默认没有表单格式
+                    //通过post的第三个参数：emulateJSON: true，设置提交的内容类型为普通表单数据格式
+                    var url = 'http://www.phonegap100.com/appapi.php';
+                    this.$http.post(url, { a: 'getPortalList', catid: 20 }, { emulateJSON: true }).then(response => {
+                        console.log("response===", response.body);
+                    }, response => {
+                        // error callback
+                    });
+                },
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+
+<body>
+    <ul id="example-1">
+        <li v-for="item of items" v-bind:key='item.id'>
+            {{ item.message }}--<a href="" @click.prevent="del(item.id)">删除</a>
+        </li>
+    </ul>
+    <script>
+        var example1 = new Vue({
+            el: '#example-1',
+            data: {
+                items: [
+                    { id: 1, message: 'Foo' },
+                    { id: 2, message: 'Bar' }
+                ]
+            },
+            methods: {
+                del(id) {
+                    console.log('del');
+                    // 方法一:some
+                    // this.items.some((item, i) => {
+                    //     if (item.id === id) {
+                    //         this.items.splice(i, 1);
+                    //         return true;
+                    //     }
+                    // })
+                    // 方法二:findIndex
+                    var index = this.items.findIndex(item => {
+                        if (item.id === id) {
+                            return true;
+                        }
+                    })
+                    // console.log(index);
+                    this.items.splice(index, 1);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

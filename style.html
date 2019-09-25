@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="common/vue.js"></script>
+    <style>
+        .class1 {
+            background: #444;
+            color: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="class1">
+            我是有样式的div1
+        </div>
+        <div v-bind:class="{class1: isActive}">
+            我是有样式的div2
+        </div>
+        <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">有样式的div222</div>
+        <!-- 或者下面的写法 -->
+        <div v-bind:style="{ 'color': activeColor, 'font-size': fontSize + 'px' }">有样式的div222</div>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                isActive: true,
+                activeColor: 'red',
+                fontSize: 30,
+                baseStyles: {
+                    color: 'green',
+                    fontSize: '30px'
+                },
+                overridingStyles: {
+                    'font-weight': 'bold'
+                }
+            }
+
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>得到当前时间</title>
+</head>
+
+<body>
+    <script>
+        getCurrent();
+        function getCurrent() {
+            var myDate = new Date(); //Thu Dec 28 2017 10:</span>07:39 GMT+0800 (中国标准时间)
+            var month = ("0" + (myDate.getMonth() + 1)).slice(-2);
+            var day = ("0" + myDate.getDate()).slice(-2);
+            var str = myDate.getFullYear() + "-" + month + "-" + day;   //2017-12-28
+            alert(str);
+        }
+    </script>
+
+</body>
+
+</html>
