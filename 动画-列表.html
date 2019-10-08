@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <link rel="stylesheet" href="./css/animate.css" />
+    <style>
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateY(150px)
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all .5s ease;
+        }
+
+        /* 下面的.v-move和.v-leave-active配合使用,能够实现后面的元素渐渐飘上来的效果，而不是等着前面元素删掉之后突然上来 */
+        .v-move {
+            transition: all .5s ease;
+        }
+
+        .v-leave-active {
+            position: absolute;
+        }
+
+        li:hover {
+            /* 背景颜色过渡 */
+            background-color: pink;
+            transition: all .5s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <label>
+            id: <input type="text" v-modal='id' />
+        </label>
+        <label>
+            name: <input type="text" v-modal='name' />
+        </label>
+        <input value="add" type="button" @click='add' />
+        <!-- <ul> -->
+            <!-- 如果要为v-for创建的元素设置动画，必须设置key，不能使用transition，要用transition-group -->
+            <!-- 添加appear，是为了添加入场动画效果 -->
+            <!-- 通过设置tag属性，渲染为指定的元素，不设置的话，默认是span标签 -->
+            <transition-group appear tag='ul'>
+                <li v-for='item in items' :key='item.id' @click='del(item.id)'>{{item.id}}----{{item.name}}</li>
+            </transition-group>
+        <!-- </ul> -->
+
+    </div>
+    <script>
+
+        new Vue({
+            el: '#app',
+            data: {
+                id: '',
+                name: '',
+                items: [
+                    { id: 2, name: 'AAA' },
+                    { id: 1, name: 'BBB' },
+                    { id: 3, name: 'CCC' },
+                ],
+            },
+            methods: {
+                add() {
+                    this.items.push({ id: this.id, name: this.name });
+                    this.id = this.name = '';
+                },
+                del(id) {
+                    var index = this.items.findIndex(item => {
+                        if (item.id === id) {
+                            return true;
+                        }
+                    })
+                    this.items.splice(index, 1);
+                },
+            }
+        })
+
+    </script>
+</body>
+
+</html>

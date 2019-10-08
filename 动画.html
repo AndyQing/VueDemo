@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <link rel="stylesheet" href="./css/animate.css" />
+    <style>
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(150px)
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all .5s ease;
+        }
+
+        .my-enter,
+        .my-leave-to {
+            opacity: 0;
+            transform: translateY(150px);
+        }
+
+        .my-enter-active,
+        .my-leave-active {
+            transition: all .5s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <button @click='flag=!flag'>没有动画---点击消失或展示flag</button>
+        <h3 v-if="flag">hello</h3>
+        <br />
+        <button @click='flag2=!flag2'>有动画---点击消失或展示flag2</button>
+        <transition>
+            <h3 v-if="flag2">hello</h3>
+        </transition>
+        <br />
+        <button @click='flag3=!flag3'>有动画---点击消失或展示flag3</button>
+        <transition name='my'>
+            <!-- 加了name，就从"v-"变成了"my-" -->
+            <h3 v-if="flag3">hello</h3>
+        </transition>
+        <br />
+
+        <!-- 第三方效果链接：https://daneden.github.io/animate.css/ -->
+        <button @click='flag4=!flag4'>使用第三方css实现</button>
+        <!-- class中需要加animated，不然动画没效果 -->
+        <!-- <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut" :duration='200'>
+            <h3 v-if="flag4">hello</h3>
+        </transition> -->
+
+        <!-- 也可把class放在h3元素上，例如：-->
+        <!-- 其中:duration='200'表示统一设置入场和出场动画时长毫秒值 ，可以给duration传个对象，如：{enter:200,leave:400}分别设置时长 -->
+        <transition enter-active-class="bounceIn" leave-active-class="bounceOut" :duration='{enter:200,leave:400}'>
+            <h3 v-if="flag4" class="animated">hello</h3>
+        </transition>
+    </div>
+    <script>
+
+        new Vue({
+            el: '#app',
+            data: {
+                flag: false,
+                flag2: false,
+                flag3: false,
+                flag4: false,
+            },
+            method: {
+
+            }
+        })
+
+    </script>
+</body>
+
+</html>

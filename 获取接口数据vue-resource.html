@@ -15,15 +15,26 @@
     <div id="app">
         <button @click='getInfo'>点击进行get请求接口</button>
         <button @click='postInfo'>点击进行post请求接口</button>
+        <ul>
+            <li v-for="item of items" v-bind:key='item.aid'>
+                {{ item.title }}--<a href="" @click.prevent="del(item.aid)">删除</a>
+            </li>
+        </ul>
     </div>
     <script>
+        //如果配置了全局接口根域名，在发起请求的时候，url路径应该以相对路径开头，前面不能带"/"
+        Vue.http.options.root = 'http://www.phonegap100.com';
+        Vue.http.options.emulateJSON = true;
         new Vue({
             el: '#app',
+            data: { items: [] },
             methods: {
                 getInfo() {
-                    var url = 'http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20';
+                    // var url = 'http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20';
+                    var url = 'appapi.php?a=getPortalList&catid=20';
                     this.$http.get(url).then(response => {
                         console.log("response===", response.body);
+                        this.items = response.body.result;
                     }, response => {
                         // error callback
                     });
@@ -32,13 +43,34 @@
                     // 手动发起的post请求，默认没有表单格式
                     //通过post的第三个参数：emulateJSON: true，设置提交的内容类型为普通表单数据格式
                     var url = 'http://www.phonegap100.com/appapi.php';
-                    this.$http.post(url, { a: 'getPortalList', catid: 20 }, { emulateJSON: true }).then(response => {
+                    this.$http.post(url, { a: 'getPortalList', catid: 20 }).then(response => {
                         console.log("response===", response.body);
                     }, response => {
                         // error callback
                     });
                 },
-            }
+                del(id) {
+                    console.log('del');
+                    // 方法一:some
+                    // this.items.some((item, i) => {
+                    //     if (item.id === id) {
+                    //         this.items.splice(i, 1);
+                    //         return true;
+                    //     }
+                    // })
+                    // 方法二:findIndex
+                    var index = this.items.findIndex(item => {
+                        if (item.aid === id) {
+                            return true;
+                        }
+                    })
+                    // console.log(index);
+                    this.items.splice(index, 1);
+                },
+            },
+            created: function () {
+                this.getInfo();
+            },
         })
     </script>
 </body>
