@@ -14,6 +14,11 @@
         <component-a></component-a>
         <component-b></component-b>
     </div>
+    <div id="app2">
+        <login></login>
+        <!-- 调用局部组件会报错 -->
+        <!-- <component-a></component-a> -->
+    </div>
     <script>
         var ComponentA = { template: `<h1>ComponentA</h1>` }
         var ComponentB = { template: '<h1>ComponentB</h1>' }
@@ -22,6 +27,14 @@
             components: {
                 'component-a': ComponentA,
                 'component-b': ComponentB
+            }
+        })
+        new Vue({
+            el: '#app2',
+            components: {
+                login: {
+                    template: '<h1>login</h1>'
+                },
             }
         })
     </script>

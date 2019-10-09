@@ -16,6 +16,8 @@
         <button-counter></button-counter>
         <!-- 使用ButtonCounter会报错 -->
         <!-- <ButtonCounter></ButtonCounter> -->
+
+        <my-com></my-com>
     </div>
     <script>
         // 定义一个名为 button-counter 的新组件
@@ -27,14 +29,23 @@
         //     },
         //     template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
         // })
+        var dataObj={count: 0};
+        // 定义ButtonCounter组件，但是调用时要用button-counter
+        //template应该只有一个根元素
         Vue.component('ButtonCounter', {
             data: function () {
+                // return dataObj;//此时data是共享的
                 return {
                     count: 0
                 }
             },
             template: '<button v-on:click="count++">You clicked me {{ count }} times.<span>hello</span></button>'
         })
+        // 第二个参数还可以这么写：
+        var com1 = Vue.extend({
+            template: '<h3 >hello</h3>'
+        })
+        Vue.component('myCom', com1)
         new Vue({ el: '#app' })
     </script>
 </body>
