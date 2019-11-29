@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h3 id="myh3" ref='myh3'>hello qing</h3>
+        <input type="button" value="获取dom" class="btn btn-primary" @click="getElement">
+        <hr />
+        <button-counter ref='mycom'></button-counter>
+    </div>
+    <script>
+        Vue.component('button-counter', {
+            data: function () {
+                return {
+                    msg: '我是子组件中的msg'
+                }
+            },
+            methods: {
+                show() {
+                    console.log("调用了子组件的方法")
+                }
+            },
+            template: '<button>You clicked me</button>'
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '我是父组件中的数据',
+            },
+            methods: {
+                getElement(data) {
+                    // console.log(document.getElementById('h3').innerText);//不推荐
+                    console.log(this.$refs.myh3.innerText);
+                    //获取组件的引用
+                    console.log(this.$refs.mycom.msg);
+                    this.$refs.mycom.show();
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

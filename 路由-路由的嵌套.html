@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/vue-router.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <out></out>
+        <router-link to='/login?id=10&name=qing' tag='span'>登录</router-link>
+        <router-link to='/register/12/qing'>注册</router-link>
+        <!-- router-view是vue-router提供的元素，用来当作占位符 -->
+        <router-view></router-view>
+    </div>
+    <template id="tmpl">
+        <div>
+            <h1>我是通过template元素，在外部定义的组件结构，这种方式，有代码提示</h1>
+            <p>这种方式好用</p>
+        </div>
+    </template>
+    <script>
+        //组件的模板对象
+        var out = {
+            template: "#tmpl"
+        }
+        var login = {
+            template: '<h3 >登录组件---{{$route.query.id}}</h3>',
+            data() {
+                return {
+                    msg: '123'
+                }
+            },
+            created() {
+                console.log(this.$route, this.$route.query.id);//用this.$route.query拿到传参
+            }
+        }
+        var register = {
+            template: '<h3 >注册组件---{{this.$route.params.id}}---{{this.$route.params.name}}</h3>',
+            created() {
+                console.log(this.$route, this.$route.params.id);//用this.$route.params拿到传参
+            }
+        }
+
+        var routerObj = new VueRouter({
+            //route表示路由匹配规则
+            routes: [
+                { path: '/', redirect: '/login' },//redirect重定向
+                { path: '/login', component: login },
+                { path: '/register/:id/:name', component: register }
+            ],
+
+        });
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+            },
+            components: { out, },
+            router: routerObj//将路由规则对象注册到vm实例上，用来监听url地址的变化，然后展示对应组件
+        })
+    </script>
+</body>
+
+</html>

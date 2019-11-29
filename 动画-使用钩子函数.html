@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
-    <link rel="stylesheet" href="./css/animate.css" />
     <style>
         .ball {
             width: 15px;
@@ -46,9 +45,8 @@
                 },
                 afterEnter(el) {
                     console.log("ok")
-                    this.flag = false;
+                    this.flag = false;//隐藏小球
                 },
-
             }
         })
 

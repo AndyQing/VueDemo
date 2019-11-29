@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+    <!-- 导入vue-router.js包之后，路由地址后面自动添加了"#/" -->
+    <script src="./js/vue-router.js"></script>
+    <style>
+        .router-link-active,
+        .myactive {
+            /* 默认选中时添加了(.router-link-active样式)，可以用linkActiveClass配置名称 */
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <a href="#/login">登录</a>
+        <a href="#/register">注册</a> -->
+
+        <!-- router-link 默认渲染为一个 a 标签,tag设置渲染成哪种标签 -->
+        <!-- 两种传参方式：方式1：用“?id=10” 方式2：用“/:id”-->
+        <router-link to='/login?id=10&name=qing' tag='span'>登录</router-link>
+        <router-link to='/register/12/qing'>注册</router-link>
+        <!-- router-view是vue-router提供的元素，用来当作占位符 -->
+        <router-view></router-view>
+    </div>
+    <script>
+        //组件的模板对象
+        var login = {
+            template: '<h3 >登录组件---{{$route.query.id}}</h3>',
+            data() {
+                return {
+                    msg: '123'
+                }
+            },
+            created() {
+                console.log(this.$route, this.$route.query.id);//用this.$route.query拿到传参
+            }
+        }
+        var register = {
+            template: '<h3 >注册组件---{{this.$route.params.id}}---{{this.$route.params.name}}</h3>',
+            created() {
+                console.log(this.$route,this.$route.params.id);//用this.$route.params拿到传参
+            }
+        }
+
+        // 在导入vue-router.js包之后，在window全局对象中，就有了一个构造函数VueRouter
+        //new对象时，可以传递一个配置对象
+        var routerObj = new VueRouter({
+            //route表示路由匹配规则
+            routes: [
+                //对象中有两个必须的属性：1.path:表示路由地址；2.component:表示对应哪个组件
+                // { path: '/', component: login },//此方式不推荐，因为根路径和/login都显示登录页面，有歧义
+                { path: '/', redirect: '/login' },//redirect重定向
+                { path: '/login', component: login },
+                { path: '/register/:id/:name', component: register }
+            ],
+            linkActiveClass: 'myactive'
+
+        });
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+            },
+            router: routerObj//将路由规则对象注册到vm实例上，用来监听url地址的变化，然后展示对应组件
+        })
+    </script>
+</body>
+
+</html>

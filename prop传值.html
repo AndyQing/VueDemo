@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script src="./js/vue.min.js"></script>
 </head>
 
 <body>
@@ -15,25 +15,79 @@
         <blog-post title="Blogging with Vue"></blog-post>
         <blog-post title="Why Vue is so fun"></blog-post> -->
         <blog-post v-for="post in posts" v-bind:key="post.id" v-bind:title="post.title"></blog-post>
+        <hr />
+        <!-- 1、向子组件传递数据： -->
+        <com1 pmsg="hello"></com1>
+        <!-- 如果想用父组件中的data值，需要用bind的方式 -->
+        <com1 :pmsg="msg"></com1>
+
+        <!-- 2、向子组件传递方法： -->
+        <!-- func是子组件可以用的方法 -->
+        <com2 v-on:func="show"></com2>
     </div>
+    <template id="templ">
+        <div><input type="button" value="调用父组件中的方法" @click='myclick' /></div>
+    </template>
     <script>
         Vue.component('blog-post', {
             // props: ['title'],
             // prop验证
             props: {
-                'title':String
+                'title': String
             },
             template: '<h3>{{ title }}</h3>'
         })
         new Vue({
             el: '#app',
             data: {
+                msg: '我是父组件中的数据',
                 posts: [
                     { id: 1, title: 'My journey with Vue' },
                     { id: 2, title: 'Blogging with Vue' },
                     { id: 3, title: 'Why Vue is so fun' },
-                    { id: 4, title: 2 }
+                    { id: 4, title: 'hehe' }
                 ]
+            },
+            methods: {
+                show(data) {
+                    console.log("执行父组件的方法,传过来的参数" + data);
+                }
+            },
+            components: {
+                // com1组件：
+                com1: {
+                    data() {//子组件中的data数据可以在template直接调用，是组件私有的，可读可写
+                        return {
+                            title: '123'
+                        }
+                    },
+                    template: '<div><h1 @click="change">这是子组件---{{pmsg}}{{title}}</h1></div>',
+                    props: ['pmsg'],//props中的数据是父组件传过来的，只读的
+                    // props: {
+                    //     'pmsg': String
+                    // },
+                    methods: {
+                        change() {
+                            this.pmsg = "被改变了";//此时虽然改变了，但是控制台会报错，因为props中的数据是只读的
+                        }
+                    }
+                },
+                // com2组件：
+                com2: {
+                    data() {
+                        return {
+                            title: '123'
+                        }
+                    },
+                    template: '#templ',
+                    methods: {
+                        myclick() {
+                            // console.log("点击子组件按钮");
+                            //
+                            this.$emit('func', 'hehe')
+                        }
+                    }
+                },
             }
         })
     </script>
