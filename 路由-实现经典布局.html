@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/vue-router.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .header {
+            background: pink;
+            height: 60px;
+        }
+
+        .container {
+            display: flex;
+            height: 500px;
+        }
+
+        .left {
+            width: 120px;
+            background: red;
+        }
+
+        .main {
+            background: blue;
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 需要用3个坑位 -->
+        <router-view></router-view>
+        <div class="container">
+            <router-view name='left'></router-view>
+            <router-view name='main'></router-view>
+        </div>
+
+    </div>
+
+    <script>
+        //组件的模板对象
+        var header = {
+            template: '<h3 class="header">header</h3>',
+        }
+        var leftBox = {
+            template: '<h3 class="left">leftBox左侧菜单</h3>',
+        }
+        var mainBox = {
+            template: '<h3 class="main">mainBox主体区域</h3>',
+        }
+
+        var routerObj = new VueRouter({
+            //route表示路由匹配规则
+            routes: [
+                {
+                    path: '/',
+                    components: {
+                        default: header,
+                        left: leftBox,
+                        main: mainBox,
+
+                    }
+
+                },
+            ],
+        });
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+            },
+            router: routerObj//将路由规则对象注册到vm实例上，用来监听url地址的变化，然后展示对应组件
+        })
+    </script>
+</body>
+
+</html>

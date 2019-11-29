@@ -24,6 +24,8 @@
         <!-- 2、向子组件传递方法： -->
         <!-- func是子组件可以用的方法 -->
         <com2 v-on:func="show"></com2>
+        <!-- 或写成下面： -->
+        <!-- <com2 @func="show"></com2> -->
     </div>
     <template id="templ">
         <div><input type="button" value="调用父组件中的方法" @click='myclick' /></div>

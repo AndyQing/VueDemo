@@ -12,56 +12,60 @@
 
 <body>
     <div id="app">
-        <out></out>
-        <router-link to='/login?id=10&name=qing' tag='span'>登录</router-link>
-        <router-link to='/register/12/qing'>注册</router-link>
-        <!-- router-view是vue-router提供的元素，用来当作占位符 -->
+        <router-link to='/account'>Account</router-link>
+        <!-- router-view这是第一个坑位 -->
         <router-view></router-view>
     </div>
     <template id="tmpl">
         <div>
-            <h1>我是通过template元素，在外部定义的组件结构，这种方式，有代码提示</h1>
-            <p>这种方式好用</p>
+            <h1>我是通过外层组件</h1>
+            <router-link to='/account/login' tag='span'>登录</router-link>
+            <router-link to='/account/register'>注册</router-link>
+            <!-- router-view这是第二个坑位 -->
+            <router-view></router-view>
         </div>
     </template>
     <script>
         //组件的模板对象
-        var out = {
+        var account = {
             template: "#tmpl"
         }
         var login = {
-            template: '<h3 >登录组件---{{$route.query.id}}</h3>',
+            template: '<h3 >登录组件---</h3>',
             data() {
                 return {
                     msg: '123'
                 }
             },
-            created() {
-                console.log(this.$route, this.$route.query.id);//用this.$route.query拿到传参
-            }
         }
         var register = {
-            template: '<h3 >注册组件---{{this.$route.params.id}}---{{this.$route.params.name}}</h3>',
-            created() {
-                console.log(this.$route, this.$route.params.id);//用this.$route.params拿到传参
-            }
+            template: '<h3 >注册组件---</h3>',
         }
 
         var routerObj = new VueRouter({
             //route表示路由匹配规则
             routes: [
-                { path: '/', redirect: '/login' },//redirect重定向
-                { path: '/login', component: login },
-                { path: '/register/:id/:name', component: register }
+                // { path: '/account', component: account },
+                // { path: '/account/login', component: login },
+                // { path: '/account/register', component: register }
+                //上面方式并不能实现嵌套，用下面的方法吧：
+                {
+                    path: '/account',
+                    component: account,
+                    //使用children属性实现子路由，且path前不要带‘/’,否则永远以根路径请求
+                    children: [
+                        { path: 'login', component: login },
+                        { path: 'register', component: register }
+                    ]
+                },
             ],
-
         });
 
         var vm = new Vue({
             el: '#app',
             data: {
             },
-            components: { out, },
+            components: { account, },
             router: routerObj//将路由规则对象注册到vm实例上，用来监听url地址的变化，然后展示对应组件
         })
     </script>
