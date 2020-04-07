@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p>此时这个p标签不会展示</p>
+    </div>
+    <script>
+        var ComponentA = { template: `<h1>ComponentA</h1>` }
+        new Vue({
+            el: '#app',
+            render: function (createElement) {//createElement是一个方法，调用它，能够把指定的模板渲染成html结构
+                return createElement(ComponentA);//这里的return结果会覆盖页面中 el 指定的那个容器
+            }
+        })
+    </script>
+</body>
+
+</html>
