@@ -11,11 +11,12 @@
 
 <body>
     <div id="app">
-        <p>{{ message }}</p>
+        <p>{{ message }}-----</p>
         <!-- 等同于下面： -->
         <p v-text="message"></p>
+        <p v-html='msg2'></p>
         <p v-once>这个将不会改变: {{ message }}</p>
-        <img src="./images/1-xa@2x.png"/>
+        <img src="./images/1-xa@2x.png" />
         <!-- {{message}}<br>
         {{5+5}}<br>
         {{ ok ? 'YES' : 'NO' }}<br>
@@ -28,7 +29,9 @@
             data: {
                 // ok: true,
                 // id: 0,
-                message: 'Hello Vue!'
+                message: 'Hello Vue!',
+                msg2: '<i>hello qing</i>'
+
             }
         })
     </script>

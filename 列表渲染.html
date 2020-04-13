@@ -5,16 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>v-for的使用</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 </head>
 
 <body>
-    <ul id="example-1">
-        <li v-for="item of items" v-bind:key='item.id'>
-            {{ item.message }}--<a href="" @click.prevent="del(item.id)">删除</a>
-        </li>
-    </ul>
+    <div id="example-1">
+        <ul>
+            <!-- 循环中的key值只能使用number或者string类型，用来保证数据的唯一性 -->
+            <li v-for="item of items" v-bind:key='item.id'>
+                {{ item.message }}--<a href="" @click.prevent="del(item.id)">删除</a>
+            </li>
+        </ul>
+
+        <!-- 如果使用v-for迭代数字的话，下标是从1开始的 -->
+        <p v-for='count in 10'>第{{count}}循环</p>
+    </div>
+
     <script>
         var example1 = new Vue({
             el: '#example-1',

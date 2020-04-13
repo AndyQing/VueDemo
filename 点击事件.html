@@ -14,6 +14,7 @@
         <!-- `greet` 是在下面定义的方法名 -->
         <p>{{name}}</p>
         <button v-on:click="greet">Greet</button>
+        <p v-on:mouseover="show">show</p>
     </div>
     <script>
         var vm = new Vue({
@@ -25,10 +26,13 @@
                 greet: function (event) {
                     // `this` 在方法里指向当前 Vue 实例
                     alert('Hello ' + this.name + '!')//'Hello qingqing!'
-                    this.name='qwe';
+                    this.name = 'qwe';
                     if (event) {  // `event` 是原生 DOM 事件
                         alert(event.target.tagName)//'BUTTON'
                     }
+                },
+                show: function () {
+                    alert("show------")
                 }
             }
         })
