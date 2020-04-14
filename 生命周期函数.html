@@ -50,7 +50,6 @@
                 //此时页面中的元素还没真正替换过来
                 console.group('beforeMount 挂载前状态===============》');
                 console.log("%c%s", "color:green", "el     : " + (this.$el)); //已被初始化
-                console.log(this.$el); // 当前挂在的元素
                 console.log("%c%s", "color:red", document.getElementById('h1').innerText); //{{message}}
             },
             mounted: function () {

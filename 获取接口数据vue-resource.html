@@ -32,6 +32,12 @@
                 getInfo() {
                     // var url = 'http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20';
                     var url = 'appapi.php?a=getPortalList&catid=20';
+                    //第一个回调函数必写：
+                    // this.$http.get(url).then(function (response) {
+                    //     // response.body 和 response.data 都是返回的数据，推荐用  response.body
+                    //     console.log("response===", response.body);
+                    // });
+
                     this.$http.get(url).then(response => {
                         console.log("response===", response.body);
                         this.items = response.body.result;
