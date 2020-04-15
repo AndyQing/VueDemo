@@ -23,15 +23,28 @@
         {{ message.split('').reverse().join('') }}
         <div v-bind:id="'list-' + id">菜鸟教程</div> -->
     </div>
+    <div id="root"></div>
     <script>
+        var data = { a: 1 }
         var vm = new Vue({
             el: '#app',
             data: {
                 // ok: true,
                 // id: 0,
                 message: 'Hello Vue!',
-                msg2: '<i>hello qing</i>'
+                msg2: '<i>hello qing</i>',
+            },
+            // data: data
+        })
+        console.log(vm.$data === data)  // => true
+        console.log(vm.$el === document.getElementById('app')) // => true
 
+        // 模板可以写在vue实例中：例如：
+        new Vue({
+            el: '#root',
+            template: '<h1>hello {{msg}}</h1>',
+            data: {
+                msg: 'world'
             }
         })
     </script>

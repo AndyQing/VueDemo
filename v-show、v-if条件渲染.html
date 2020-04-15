@@ -11,6 +11,7 @@
 
 <body>
     <div id="app">
+        <!-- 注：v-else 、v-else-if 必须跟在 v-if 或者 v-else-if之后。 -->
         <h1 v-if="awesome">Hello qing!</h1>
         <div v-if="type === 'A'">
             A
@@ -24,6 +25,8 @@
         <div v-else>
             Not A/B/C
         </div>
+
+        <h1 v-show="ok">Hello!</h1>
     </div>
 
     <script>
@@ -32,6 +35,7 @@
             data: {
                 awesome: true,
                 type: 'A',
+                ok: false
             }
         })
     </script>
